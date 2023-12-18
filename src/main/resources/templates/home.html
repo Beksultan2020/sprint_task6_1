@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/main.html">
+<style>
+    .card {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+    }
+</style>
+<div class="container" layout:fragment="content">
+
+    <div class="row mt-3">
+        <div class="col-6" th:each="app : ${applications}">
+            <div class="card mb-3" style="border: 2px solid #007bff;">
+                <div class="card-body">
+                    <div class="card-title" th:if="${!app.handled}">
+                        <span  style=" font-weight: bold; color: red;">*(Новая)</span>
+                        <span style="font-weight: bold;">Заявка от: </span>
+                        <span th:text="${app.userName}"></span>
+                    </div>
+                    <div class="card-title" th:if="${app.handled}">
+                        <span style="font-weight: bold;">Заявка от: </span>
+                        <span th:text="${app.userName}"></span>
+                    </div>
+                    <p class="card-text">
+                        <span style="font-weight: bold;">Курс: </span>
+                        <span th:text="${app.courseName}"></span>
+                    </p>
+                    <p class="card-text" th:text="${app.commentary}"></p>
+                    <p class="card-text">
+                        <span style="font-weight: bold;">Тел: </span>
+                        <span th:text="${app.phone}"></span>
+                    </p>
+                    <a class="btn btn-primary" th:href="@{'/applicationsDetails/'+${app.id}}">Детали:</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</html>

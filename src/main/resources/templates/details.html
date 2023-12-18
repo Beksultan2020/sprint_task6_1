@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+
+<div class="container" layout:fragment="content">
+    <div th:if="${!details.handled}">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h5 style="color: red">***Новая необработанная заявка***</h5>
+            </div>
+        </div>
+    </div>
+    <div th:if="${details.handled}">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h5 style="color: green">***Обработанная заявка***</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-6">
+            <form method="post" th:action="@{'/updateApp'}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" name="id" th:value="${details.id}">
+                    </div>
+                    <div class="mb-3">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" name="userName" th:value="${details.userName}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label>Course Name</label>
+                        <select class="form-control" name="courseName" disabled>
+                            <option th:value="${details.courseName}" th:text="${details.courseName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Phone</label>
+                        <input type="text" class="form-control" name="phone" th:value="${details.phone}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label>Commentary</label>
+                        <textarea class="form-control" name="commentary" th:text="${details.commentary}"
+                                  disabled></textarea>
+                    </div>
+                </div>
+
+                <div th:if="${!details.handled}">
+                    <div class="mb-3">
+                        <button class="btn btn-success">Обработать заявку</button>
+                    </div>
+                </div>
+            </form>
+            <form method="post" th:action="@{'/deleteApp'}">
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" name="id" th:value="${details.id}">
+                </div>
+                <button class="btn btn-danger">Удалить заявку</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>
